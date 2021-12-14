@@ -1,4 +1,4 @@
-## Welcome to GitHub Pages
+## Blog
 
 You can use the [editor on GitHub](https://github.com/blhough/blhough.github.io/edit/main/index.md) to maintain and preview the content for your website in Markdown files.
 
@@ -15,7 +15,7 @@ Syntax highlighted code block
 ## Header 2
 ### Header 3
 
-- Bulleted
+- 2021-12-12 Nearest Point to a PolyLine
 - List
 
 1. Numbered
