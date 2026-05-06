@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>your blog title</title>
+  <link href="https://YOUR-DOMAIN.example/feed.xml" rel="self" />
+  <link href="https://YOUR-DOMAIN.example/" />
+  <updated>2026-05-05T12:00:00Z</updated>
+  <id>https://YOUR-DOMAIN.example/</id>
+  <author>
+    <name>Your Name</name>
+  </author>
+
+  <entry>
+    <title>Hello, world</title>
+    <link href="https://YOUR-DOMAIN.example/posts/hello-world.html" />
+    <id>https://YOUR-DOMAIN.example/posts/hello-world.html</id>
+    <updated>2026-05-05T12:00:00Z</updated>
+    <summary>Welcome to a deliberately tiny static site.</summary>
+  </entry>
+
+  <entry>
+    <title>Formatting check: code and lists</title>
+    <link href="https://YOUR-DOMAIN.example/posts/example-snippet.html" />
+    <id>https://YOUR-DOMAIN.example/posts/example-snippet.html</id>
+    <updated>2026-05-01T12:00:00Z</updated>
+    <summary>A short post that shows inline code, blocks, and lists.</summary>
+  </entry>
+
+  <entry>
+    <title>Is it faster to index an array or use a switch?</title>
+    <link href="https://YOUR-DOMAIN.example/posts/array-vs-switch-benchmark.html" />
+    <id>https://YOUR-DOMAIN.example/posts/array-vs-switch-benchmark.html</id>
+    <updated>2026-02-25T10:56:00Z</updated>
+    <summary>Sample benchmark post with C# code blocks, a results table, and BenchmarkDotNet appendix.</summary>
+  </entry>
+</feed>

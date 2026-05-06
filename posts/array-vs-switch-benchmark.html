@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Array lookup vs switch — your blog title</title>
+    <link rel="stylesheet" href="../style.css" />
+    <link rel="alternate" type="application/atom+xml" title="your blog title" href="../feed.xml" />
+    <meta
+      name="description"
+      content="Sample benchmark post: indexing a string table vs a switch expression for small integer codes."
+    />
+  </head>
+  <body>
+    <div id="wrapper">
+      <nav>
+        <ul>
+          <li>
+            <a href="../index.html" title="Home"><span class="nav-icon" aria-hidden="true">⌂</span></a>
+          </li>
+          <li><a href="../archive.html">Archive</a></li>
+          <li><a href="../about.html">About</a></li>
+          <li class="side"><a href="../feed.xml" title="Atom feed">RSS</a></li>
+          <li class="side"><a href="https://github.com/" rel="me">GitHub</a></li>
+        </ul>
+      </nav>
+
+      <header>
+        <h1 id="top">
+          <a href="../index.html">Is it faster to index an array or use a switch?</a>
+        </h1>
+        <h2><span class="accent">25 Feb 2026</span></h2>
+      </header>
+
+      <main>
+        <article>
+          <p class="meta">
+            <span title="Published">25 Feb 2026</span>
+            <span class="divider"></span>
+            <span title="Time to read">~4 mins</span>
+            <span class="divider"></span>
+            <span title="Tags">.NET, C#, Performance</span>
+          </p>
+
+          <p>
+            Suppose you are mapping small integer codes to fixed strings—think log levels or enum-like ordinals. Two
+            obvious shapes are a <code>readonly string[]</code> plus bounds check, and a
+            <code>switch</code> expression with a default that falls back to <code>ToString()</code>. This sample post
+            shows that shape with code blocks and a BenchmarkDotNet-style results table.
+          </p>
+
+          <p>
+            Before you scroll to the numbers, pick a horse: do you expect materially different throughput on modern
+            JIT for dense integer keys?
+          </p>
+
+          <h4 id="code"><a href="#code">Code</a></h4>
+
+          <p>Array-backed lookup:</p>
+
+          <pre><code class="language-csharp">static readonly string[] Strings =
+[
+    "Trace",
+    "Debug",
+    "Information",
+    "Warning",
+    "Error",
+    "Critical",
+    "None",
+];
+
+public string Array(int i)
+    =&gt; i &lt; Strings.Length
+        ? Strings[i]
+        : i.ToString();
+</code></pre>
+
+          <p>
+            And the <code>switch</code> form (for dense 0..N keys the compiler can emit a jump table, which is the
+            same mental model as indexing):
+          </p>
+
+          <pre><code class="language-csharp">public string Switch(int i)
+    =&gt; i switch
+    {
+        0 =&gt; "Trace",
+        1 =&gt; "Debug",
+        2 =&gt; "Information",
+        3 =&gt; "Warning",
+        4 =&gt; "Error",
+        5 =&gt; "Critical",
+        6 =&gt; "None",
+        _ =&gt; i.ToString(),
+    };
+</code></pre>
+
+          <p>
+            Everything that follows is <em>illustrative</em>: treat the table as showing the shape of a BenchmarkDotNet
+            summary, not a reproducibility claim.
+          </p>
+
+          <h4 id="results"><a href="#results">Results</a></h4>
+
+          <table>
+            <thead>
+              <tr>
+                <th>Method</th>
+                <th><code>i</code></th>
+                <th style="text-align: right">Mean</th>
+                <th style="text-align: right">Error</th>
+                <th style="text-align: right">StdDev</th>
+                <th style="text-align: right">Median</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Array</td>
+                <td>0</td>
+                <td style="text-align: right">0.63 ns</td>
+                <td style="text-align: right">0.01 ns</td>
+                <td style="text-align: right">0.04 ns</td>
+                <td style="text-align: right">0.62 ns</td>
+              </tr>
+              <tr>
+                <td>Switch</td>
+                <td>0</td>
+                <td style="text-align: right">0.29 ns</td>
+                <td style="text-align: right">0.04 ns</td>
+                <td style="text-align: right">0.19 ns</td>
+                <td style="text-align: right">0.40 ns</td>
+              </tr>
+              <tr>
+                <td>Array</td>
+                <td>3</td>
+                <td style="text-align: right">0.34 ns</td>
+                <td style="text-align: right">0.03 ns</td>
+                <td style="text-align: right">0.17 ns</td>
+                <td style="text-align: right">0.24 ns</td>
+              </tr>
+              <tr>
+                <td>Switch</td>
+                <td>3</td>
+                <td style="text-align: right">0.15 ns</td>
+                <td style="text-align: right">0.04 ns</td>
+                <td style="text-align: right">0.20 ns</td>
+                <td style="text-align: right">0.02 ns</td>
+              </tr>
+              <tr>
+                <td>Array</td>
+                <td>6</td>
+                <td style="text-align: right">0.51 ns</td>
+                <td style="text-align: right">0.04 ns</td>
+                <td style="text-align: right">0.20 ns</td>
+                <td style="text-align: right">0.62 ns</td>
+              </tr>
+              <tr>
+                <td>Switch</td>
+                <td>6</td>
+                <td style="text-align: right">0.42 ns</td>
+                <td style="text-align: right">0.01 ns</td>
+                <td style="text-align: right">0.03 ns</td>
+                <td style="text-align: right">0.41 ns</td>
+              </tr>
+              <tr>
+                <td>Array</td>
+                <td>7</td>
+                <td style="text-align: right">1.23 ns</td>
+                <td style="text-align: right">0.01 ns</td>
+                <td style="text-align: right">0.03 ns</td>
+                <td style="text-align: right">1.23 ns</td>
+              </tr>
+              <tr>
+                <td>Switch</td>
+                <td>7</td>
+                <td style="text-align: right">1.10 ns</td>
+                <td style="text-align: right">0.01 ns</td>
+                <td style="text-align: right">0.04 ns</td>
+                <td style="text-align: right">1.10 ns</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <p>
+            At sub-nanosecond scales the ranking flips with noise, branch prediction, and alignment. For
+            <code>i == 7</code> both paths pay for <code>ToString()</code>, which dominates the comparison. The practical
+            takeaway is unchanged: choose readability and reuse unless profiling says otherwise.
+          </p>
+
+          <h4 id="appendix"><a href="#appendix">Appendix</a></h4>
+
+          <p>Environment dump (placeholder):</p>
+
+          <pre><code class="language-text">BenchmarkDotNet v0.15.x, Linux (example host)
+12th Gen Example CPU, 1 CPU, 8 logical cores
+.NET SDK 10.x
+  [Host]  : .NET 10.x, X64 RyuJIT
+  LongRun : .NET 10.x, X64 RyuJIT
+</code></pre>
+
+          <p>Benchmark class:</p>
+
+          <pre><code class="language-csharp">[LongRunJob]
+public class Bench
+{
+    public static IEnumerable&lt;int&gt; Values() =&gt; [0, 1, 2, 3, 4, 5, 6, 7];
+
+    static readonly string[] Strings =
+    [
+        "Trace",
+        "Debug",
+        "Information",
+        "Warning",
+        "Error",
+        "Critical",
+        "None",
+    ];
+
+    [Benchmark, ArgumentsSource(nameof(Values))]
+    public string Array(int i)
+        =&gt; i &lt; Strings.Length
+            ? Strings[i]
+            : i.ToString();
+
+    [Benchmark, ArgumentsSource(nameof(Values))]
+    public string Switch(int i)
+        =&gt; i switch
+        {
+            0 =&gt; "Trace",
+            1 =&gt; "Debug",
+            2 =&gt; "Information",
+            3 =&gt; "Warning",
+            4 =&gt; "Error",
+            5 =&gt; "Critical",
+            6 =&gt; "None",
+            _ =&gt; i.ToString(),
+        };
+}
+</code></pre>
+
+          <p class="bio">
+            <strong>Your Name</strong> — replace this blurb with a one-line bio. This block mirrors the “about the
+            author” footer on long posts.
+          </p>
+
+          <p><a href="../index.html">← Home</a> · <a href="#top">Top</a></p>
+        </article>
+      </main>
+
+      <footer>
+        <p>
+          <a href="../feed.xml" title="Feed">RSS</a><span class="divider"></span>© Your Name
+        </p>
+      </footer>
+    </div>
+  </body>
+</html>

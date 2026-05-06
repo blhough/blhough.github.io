@@ -1,0 +1,385 @@
+/* Minimal programming blog — dark theme. System fonts only, no external assets. */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-family:
+    system-ui,
+    -apple-system,
+    "Segoe UI",
+    Roboto,
+    "Helvetica Neue",
+    Arial,
+    sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  color-scheme: dark;
+}
+
+body {
+  background: #121212;
+  color: #e8e8e8;
+}
+
+a {
+  text-decoration: none;
+  color: #e8e8e8;
+}
+
+a:hover {
+  color: #7eb8ff;
+}
+
+a:focus-visible {
+  outline: 2px solid #7eb8ff;
+  outline-offset: 2px;
+}
+
+.accent {
+  font-family: Georgia, "Times New Roman", Times, serif;
+  font-style: italic;
+  color: #9a9a9a;
+}
+
+.divider::before {
+  content: "\00A0|\00A0";
+}
+
+#wrapper {
+  max-width: 960px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 1rem 1rem 2rem;
+  overflow: hidden;
+}
+
+/* Nav */
+
+nav {
+  border-bottom: 1px solid #3d3d3d;
+  padding: 0 0.5rem 0.5rem;
+}
+
+nav::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+nav ul {
+  list-style-type: none;
+}
+
+nav li {
+  display: inline-block;
+  padding-left: 2rem;
+}
+
+nav li:first-of-type {
+  padding-left: 0;
+}
+
+nav li.side {
+  float: right;
+  padding-left: 1rem;
+}
+
+@media (max-width: 768px) {
+  nav li {
+    padding-left: 0.5rem;
+  }
+
+  nav li.side {
+    padding-left: 0.25rem;
+  }
+}
+
+.nav-icon {
+  font-size: 1rem;
+  opacity: 0.85;
+}
+
+nav a {
+  font-weight: 700;
+}
+
+/* Header */
+
+header {
+  border-bottom: 1px solid #3d3d3d;
+  padding: 1rem 0.5rem;
+  min-height: 8rem;
+}
+
+header a:hover {
+  color: inherit;
+}
+
+header h1 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  line-height: 0.95;
+  padding-bottom: 0.5rem;
+}
+
+header h2 {
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+
+/* Footer */
+
+footer {
+  border-top: 1px solid #3d3d3d;
+  padding: 1rem 0.5rem 0;
+  font-size: 0.9rem;
+}
+
+footer a {
+  font-weight: 700;
+}
+
+footer::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+footer > p {
+  float: right;
+}
+
+/* Articles (listing + post body) */
+
+article {
+  border-bottom: 1px solid #2a2a2a;
+  padding: 1rem 0.5rem;
+}
+
+article:last-of-type {
+  border-bottom: 0;
+}
+
+article h3 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  padding-bottom: 0.2rem;
+}
+
+article h4 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  line-height: 1.6;
+  margin-bottom: 0.4em;
+}
+
+article h5 {
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.6;
+  margin-bottom: 0.4em;
+}
+
+article p {
+  line-height: 1.6;
+  margin-bottom: 1em;
+  overflow: auto;
+}
+
+article p:last-child {
+  margin-bottom: 0;
+}
+
+article p.meta,
+article span.meta {
+  font-size: 0.9rem;
+  font-style: italic;
+  color: #9a9a9a;
+}
+
+article p.bio {
+  font-size: 0.9rem;
+  font-style: italic;
+  color: #9a9a9a;
+}
+
+article a {
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
+article a:hover {
+  text-decoration: none;
+}
+
+article h3 a {
+  text-decoration: inherit;
+}
+
+article p.links a {
+  font-weight: 700;
+  text-decoration: inherit;
+}
+
+/* Code */
+
+article code,
+article pre {
+  font-family:
+    ui-monospace,
+    "Cascadia Code",
+    "Cascadia Mono",
+    "SF Mono",
+    Menlo,
+    Monaco,
+    Consolas,
+    monospace;
+  line-height: 1.35;
+  font-size: 0.9rem;
+  font-variant-ligatures: none;
+  background-color: #1e1e1e;
+  border: 1px solid #333;
+}
+
+article code {
+  padding: 0.1rem 0.35rem;
+  word-wrap: break-word;
+}
+
+article pre {
+  margin: 0 0.5rem 1em;
+  padding: 0.75rem;
+  overflow: auto;
+}
+
+article pre > code {
+  padding: 0;
+  border: 0;
+  word-wrap: normal;
+  background: transparent;
+}
+
+article h4 > code,
+article h5 > code {
+  font-size: inherit;
+}
+
+/* Media */
+
+article img {
+  padding: 0 0.5rem;
+  max-width: calc(100% - 1rem);
+  height: auto;
+}
+
+/* Blockquote */
+
+article blockquote {
+  margin: 0 0.5rem 1em;
+  padding: 0.5rem;
+  border-left: 0.2em solid #6d6d6d;
+  color: #b5b5b5;
+}
+
+/* Lists */
+
+article ul,
+article ol {
+  margin: 0 0.5rem;
+  line-height: 1.6;
+}
+
+article > ul,
+article > ol {
+  margin-bottom: 1em;
+}
+
+article ul {
+  list-style-type: none;
+}
+
+article ol {
+  padding-left: 1.5rem;
+}
+
+article li {
+  padding-right: 0.5rem;
+}
+
+article ul > li {
+  padding-left: 1.5rem;
+  text-indent: -1rem;
+}
+
+article ul > li::before {
+  content: "\21B9";
+  padding-right: 0.5rem;
+}
+
+/* Tables */
+
+article table {
+  line-height: 1.6;
+  border-collapse: collapse;
+  margin-bottom: 1em;
+  display: block;
+  max-width: 100%;
+  overflow: auto;
+}
+
+article td,
+article th {
+  border: 1px solid #4a4a4a;
+  padding: 0.35rem 0.5rem;
+}
+
+article thead th {
+  background-color: #252525;
+  font-weight: 700;
+}
+
+article table.layout td,
+article table.layout th {
+  border: 0;
+}
+
+article table.layout td:first-of-type,
+article table.layout th:first-of-type {
+  padding-left: 0;
+}
+
+article table.layout td:last-of-type,
+article table.layout th:last-of-type {
+  padding-right: 0;
+}
+
+/* Archive page simple list */
+
+.archive-list {
+  list-style: none;
+  padding: 0 0.5rem;
+}
+
+.archive-list li {
+  padding: 0.35rem 0;
+  border-bottom: 1px solid #2a2a2a;
+}
+
+.archive-list li:last-child {
+  border-bottom: 0;
+}
+
+.archive-list time {
+  color: #9a9a9a;
+  font-size: 0.9rem;
+  margin-right: 0.75rem;
+}
