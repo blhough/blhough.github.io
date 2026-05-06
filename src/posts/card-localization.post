@@ -1,0 +1,90 @@
+TITLE: How playing-card localization works
+DATE: 6 May 2026
+ISO_DATE: 2026-05-06
+
+<article>
+  <p class="meta">
+    <span title="Published">6 May 2026</span>
+    <span class="divider"></span>
+    <span title="Time to read">~8 mins</span>
+    <span class="divider"></span>
+    <span title="Tags">Computer vision, ML, Localization</span>
+  </p>
+
+  <p>
+    For today, here is more detail on how the card localization pipeline works: two model outputs drive corner
+    detection and grouping, then homographies rectify each card for downstream recognition.
+  </p>
+
+  <h4>Model outputs</h4>
+  <p>
+    The image is first processed by a model with two heads: a <strong>corner heatmap</strong> and a
+    <strong>segmentation embedding</strong>. Below are placeholders for sample visualizations of each.
+  </p>
+  <p><em>Image placeholder: corner heatmap (grayscale; white blob per corner).</em></p>
+  <p><em>Image placeholder: segmentation embedding (colorful; each card gets a consistent color in embedding space).</em></p>
+  <p>
+    The corner heatmap is black and white: a bright blob marks each corner. The segmentation head is colorful in
+    visualization—it effectively assigns a color (embedding vector) to each card region so corners on the same card
+    should land in similar color space.
+  </p>
+
+  <h4>1. Extract corners from the heatmap</h4>
+  <p>
+    The heatmap is thresholded; the center of each white blob becomes one entry in an unordered list of corner
+    locations. For each corner, the pipeline samples values from the other outputs (segmentation embedding and
+    orientation heatmap) at that pixel location.
+  </p>
+
+  <h4>2. Sample segmentation and orientation at each corner</h4>
+  <p>
+    At every corner, the segmentation embedding is read with bilinear interpolation. That assigns an embedding
+    “color” to the corner. When segmentation is healthy, all four corners of the same card get similar vectors.
+  </p>
+  <p><em>Image placeholder: heatmap with corner overlays.</em></p>
+  <p><em>Image placeholder: embedding visualization at corner samples.</em></p>
+  <p><em>Image placeholder: orientation heatmap sample.</em></p>
+
+  <h4>3. Group corners into quads</h4>
+  <p>
+    <strong>Version one</strong> was a greedy pairwise merge: if the color distance between two corners fell below a
+    threshold, merge them; when a group reached four corners, close it. It was fast, but a single threshold could not
+    cover all scenes—either true corners stayed split (threshold too tight) or unrelated corners merged (too loose).
+  </p>
+  <p>
+    <strong>Version two</strong> casts a wider net. All corner pairs closer than a cutoff become candidate
+    <em>edges</em>. Every pair of edges yields a candidate quadrilateral of four corners; the sum of edge color
+    distances is the candidate score. Candidates are sorted by that score (lower is more self-consistent). A greedy
+    pass walks the sorted list and accepts a candidate only if none of its four corners were already used—so later
+    high-score quads that reuse corners are skipped.
+  </p>
+  <p>The debug log looks roughly like this:</p>
+  <pre><code>num candidates 22
+score 0.122459, 0, 1, 8, 9
+group
+score 0.225621, 3, 7, 10, 15
+group
+score 0.683872, 3, 6, 10, 15 &lt;&lt; Skipped because corner 3, 10, 15 already used
+score 0.684685, 0, 8, 9, 10 &lt;&lt; Skipped because corner 0, 8, 9 already used
+score 0.691545, 5, 6, 4, 2
+group
+...
+Found 3 Cards</code></pre>
+
+  <h4>4. Homography and per-card inference</h4>
+  <p>
+    Once corners are grouped into fours, a homography maps each quadrilateral to a canonical rectangle, removing
+    perspective and cropping tightly. That warp is run for every accepted group, then recognition runs on each
+    rectified card crop.
+  </p>
+
+  <h4>Performance and training data</h4>
+  <p>
+    In practice it is fairly reliable on the order of 12–16 cards when the camera angle is not extreme. The main
+    bottleneck so far is training realism: the synthetic generator emits three families of layouts—fully random
+    position and rotation, random position with similar orientation, and a binder-style grid. Lighting is the weakest
+    link; cards tend to float in space, and stronger shadows and ambient occlusion would likely help generalization.
+  </p>
+
+  <p><a href="../index.html">← Home</a></p>
+</article>
