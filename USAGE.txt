@@ -36,3 +36,8 @@ SITE_TITLE, AUTHOR, GITHUB_URL, META_DESCRIPTION, HOME_H1, HOME_H2.
 Templates
 ---------
 HTML skeletons live in templates/ with placeholders like {{SITE_TITLE}}, {{ROOT}}, {{POST_LIST}}, etc.
+
+GitHub Pages
+------------
+Workflow: .github/workflows/pages.yml (push to main, or run it manually from the Actions tab).
+Repository: Settings → Pages → Build and deployment → set Source to “GitHub Actions”.
