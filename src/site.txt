@@ -1,0 +1,6 @@
+SITE_TITLE: your blog title
+AUTHOR: Benjamin Hough
+GITHUB_URL: https://github.com/
+META_DESCRIPTION: A minimal programming blog.
+HOME_H1: My Blog
+HOME_H2: <span class="accent">by</span> Benjamin Hough

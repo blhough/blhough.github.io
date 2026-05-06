@@ -1,0 +1,35 @@
+TITLE: Formatting check: code and lists
+DATE: 1 May 2026
+ISO_DATE: 2026-05-01
+
+<article>
+          <p class="meta">
+            <span title="Published">1 May 2026</span>
+            <span class="divider"></span>
+            <span title="Time to read">~2 mins</span>
+            <span class="divider"></span>
+            <span title="Tags">Demo</span>
+          </p>
+
+          <p>Inline <code>npm</code>-free means you type paths yourself. Here is a fenced-style block:</p>
+
+          <pre><code>function greet(name) {
+  return `hello, ${name}`;
+}</code></pre>
+
+          <h4>Unordered list</h4>
+          <ul>
+            <li>Dark background with readable contrast</li>
+            <li>Tab-arrow bullets like the reference layout</li>
+            <li>Monospace stack uses installed system fonts</li>
+          </ul>
+
+          <h4>Ordered list</h4>
+          <ol>
+            <li>Copy <code>posts/hello-world.html</code></li>
+            <li>Rename and edit content</li>
+            <li>Add a row on the homepage and in <code>archive.html</code></li>
+          </ol>
+
+          <p><a href="../index.html">← Home</a></p>
+        </article>

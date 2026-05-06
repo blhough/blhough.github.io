@@ -3,10 +3,10 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Archive — your blog title</title>
+    <title>About — your blog title</title>
     <link rel="stylesheet" href="style.css" />
     <link rel="alternate" type="application/atom+xml" title="your blog title" href="feed.xml" />
-    <meta name="description" content="All posts." />
+    <meta name="description" content="About this blog." />
   </head>
   <body>
     <div id="wrapper">
@@ -23,17 +23,18 @@
       </nav>
 
       <header>
-        <h1><a href="archive.html">Archive</a></h1>
-        <h2><span class="accent">All posts</span></h2>
+        <h1><a href="about.html">About</a></h1>
+        <h2><span class="accent">Colophon</span></h2>
       </header>
 
       <main>
         <article>
-          <ul class="archive-list">
-            <li><time datetime="2026-05-05">5 May 2026</time> <a href="posts/hello-world.html">Hello, world</a></li>
-            <li><time datetime="2026-05-01">1 May 2026</time> <a href="posts/example-snippet.html">Formatting check: code and lists</a></li>
-            <li><time datetime="2026-02-25">25 Feb 2026</time> <a href="posts/array-vs-switch-benchmark.html">Is it faster to index an array or use a switch?</a></li>
-          </ul>
+          <p>
+            This site is built with <code>tool/gen_site.c</code> and <code>build.sh</code>: post sources live in
+            <code>src/posts/*.post</code> (see <code>USAGE.txt</code>), templates under <code>templates/</code>, and
+            the published tree is written to <code>out/</code>.
+          </p>
+          <p class="bio">Replace this paragraph with whatever you want readers to know.</p>
         </article>
       </main>
 

@@ -12,27 +12,20 @@
 }
 
 html {
-  font-family:
-    system-ui,
-    -apple-system,
-    "Segoe UI",
-    Roboto,
-    "Helvetica Neue",
-    Arial,
-    sans-serif;
+  font-family: Arial;
   font-size: 16px;
-  line-height: 1.5;
+  line-height: 1.4;
   color-scheme: dark;
 }
 
 body {
-  background: #121212;
+  background: #1e1c1c;
   color: #e8e8e8;
 }
 
 a {
   text-decoration: none;
-  color: #e8e8e8;
+  color: #e29047;
 }
 
 a:hover {

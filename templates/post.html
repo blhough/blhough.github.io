@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{PAGE_TITLE}}</title>
+    <link rel="stylesheet" href="{{ROOT}}style.css" />
+    <link rel="alternate" type="application/atom+xml" title="{{SITE_TITLE}}" href="{{ROOT}}feed.xml" />
+    <meta name="description" content="{{META_DESCRIPTION}}" />
+  </head>
+  <body>
+    <div id="wrapper">
+      <nav>
+        <ul>
+          <li><a href="{{ROOT}}index.html" title="Home">Home</a></li>
+          <li><a href="{{ROOT}}archive.html">Archive</a></li>
+          <li><a href="{{ROOT}}about.html">About</a></li>
+          <li class="side"><a href="{{ROOT}}feed.xml" title="Atom feed">RSS</a></li>
+          <li class="side"><a href="{{GITHUB_URL}}" rel="me">GitHub</a></li>
+        </ul>
+      </nav>
+
+      <header>
+        <h1><a href="{{ROOT}}index.html">{{HEADER_TITLE}}</a></h1>
+        <h2><span class="accent">{{HEADER_SUB}}</span></h2>
+      </header>
+
+      <main>
+{{MAIN_HTML}}
+      </main>
+
+      <footer>
+        <p>
+          <a href="{{ROOT}}feed.xml" title="Feed">RSS</a><span class="divider"></span>© {{AUTHOR}}
+        </p>
+      </footer>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,29 @@
+TITLE: Hello, world
+DATE: 5 May 2026
+ISO_DATE: 2026-05-05
+
+<article>
+          <p class="meta">
+            <span title="Published">5 May 2026</span>
+            <span class="divider"></span>
+            <span title="Time to read">~3 mins</span>
+            <span class="divider"></span>
+            <span title="Tags">Meta, Blogging</span>
+          </p>
+
+          <p>
+            If you can edit HTML, you can maintain this blog. The homepage lists recent posts; each post is a
+            separate file; <code>feed.xml</code> is a static Atom feed you can update when you publish.
+          </p>
+
+          <p>
+            Host it anywhere that serves files: object storage with a CDN, GitHub Pages, Neocities, or your own
+            web server. No build step required.
+          </p>
+
+          <blockquote>
+            <p>The goal is durability: fewer moving parts means fewer things to break.</p>
+          </blockquote>
+
+          <p><a href="../index.html">← Home</a></p>
+        </article>

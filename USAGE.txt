@@ -1,0 +1,38 @@
+Static blog generator — quick reference
+=======================================
+
+Build
+-----
+From the repository root:
+
+  ./build.sh
+
+This runs clang on tool/gen_site.c, runs tool/gen_site with defaults (-i src -o out -t templates -c style.css),
+and copies feed.xml into out/ when feed.xml exists at the repo root.
+
+Serve the site from the out/ directory (generated HTML, style.css, about.html, feed.xml).
+
+Posts
+-----
+Create files under src/posts/ with names ending in .post. The basename becomes the URL slug:
+  src/posts/my-topic.post  ->  out/posts/my-topic.html
+
+Each post file must start with exactly these three lines (order matters), then the HTML body:
+
+  TITLE: Plain-text title
+  DATE: Human-readable date (shown in listings)
+  ISO_DATE: YYYY-MM-DD
+
+The rest of the file is copied verbatim into the page <main> (usually a full <article>...</article> block).
+
+ISO_DATE is required, must be a valid calendar date, and controls sort order (newest first on the home and
+archive pages). Ties break by filename.
+
+Site config
+-----------
+Edit src/site.txt: lines are KEY: value (first colon separates key from value). Keys used by templates include
+SITE_TITLE, AUTHOR, GITHUB_URL, META_DESCRIPTION, HOME_H1, HOME_H2.
+
+Templates
+---------
+HTML skeletons live in templates/ with placeholders like {{SITE_TITLE}}, {{ROOT}}, {{POST_LIST}}, etc.
