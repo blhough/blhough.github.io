@@ -38,9 +38,13 @@ a:focus-visible {
 }
 
 .accent {
-  font-family: Georgia, "Times New Roman", Times, serif;
   font-style: italic;
   color: #9a9a9a;
+}
+
+.not-eq {
+  color: #9a9a9a;
+  font-size: 110%;
 }
 
 .divider::before {
@@ -201,7 +205,6 @@ article p:last-child {
 article p.meta,
 article span.meta {
   font-size: 0.9rem;
-  font-style: italic;
   color: #9a9a9a;
 }
 
